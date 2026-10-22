@@ -46,16 +46,110 @@ game_over = False
 line_y = 0
 
 
+
+
 def draw_car(x, y, colour):
+    # Formula-style car body: nose pointing upwards
+    body = [
+        (x + 25, y + 2),
+        (x + 32, y + 20),
+        (x + 35, y + 43),
+        (x + 31, y + 67),
+        (x + 25, y + 80),
+        (x + 19, y + 67),
+        (x + 15, y + 43),
+        (x + 18, y + 20),
+    ]
+
+    # Exposed tyres
+    tyre = (18, 18, 20)
+    tyre_positions = [
+        (x + 1, y + 19),
+        (x + 37, y + 19),
+        (x + 1, y + 55),
+        (x + 37, y + 55),
+    ]
+
+    for tx, ty in tyre_positions:
+        pygame.draw.rect(
+            screen, tyre,
+            (tx, ty, 12, 23),
+            border_radius=4
+        )
+        # Tyre sidewall detail
+        pygame.draw.line(
+            screen, (90, 90, 90),
+            (tx + 3, ty + 5),
+            (tx + 3, ty + 18), 2
+        )
+
+    # Rear wing
     pygame.draw.rect(
-        screen, colour,
-        (x, y, CAR_WIDTH, CAR_HEIGHT),
-        border_radius=10
+        screen, (25, 25, 28),
+        (x + 5, y + 10, 40, 7),
+        border_radius=2
     )
     pygame.draw.rect(
-        screen, BLACK,
-        (x + 8, y + 12, CAR_WIDTH - 16, 22),
-        border_radius=5
+        screen, colour,
+        (x + 7, y + 8, 36, 4)
+    )
+
+    # Main chassis
+    pygame.draw.polygon(screen, colour, body)
+
+    # Sidepod details
+    pygame.draw.polygon(
+        screen, (35, 35, 38),
+        [(x + 15, y + 37), (x + 20, y + 42),
+         (x + 19, y + 61), (x + 13, y + 55)]
+    )
+    pygame.draw.polygon(
+        screen, (35, 35, 38),
+        [(x + 35, y + 37), (x + 30, y + 42),
+         (x + 31, y + 61), (x + 37, y + 55)]
+    )
+
+    # Cockpit surround
+    pygame.draw.ellipse(
+        screen, (20, 20, 22),
+        (x + 18, y + 28, 14, 22)
+    )
+    pygame.draw.ellipse(
+        screen, (70, 145, 175),
+        (x + 21, y + 31, 8, 12)
+    )
+
+    # Driver helmet
+    pygame.draw.circle(
+        screen, (245, 210, 65),
+        (x + 25, y + 37), 4
+    )
+
+    # Front wing
+    pygame.draw.polygon(
+        screen, (25, 25, 28),
+        [(x + 8, y + 69), (x + 42, y + 69),
+         (x + 49, y + 79), (x + 1, y + 79)]
+    )
+    pygame.draw.line(
+        screen, colour,
+        (x + 4, y + 75), (x + 46, y + 75), 3
+    )
+
+    # Front wing endplates
+    pygame.draw.line(
+        screen, (230, 230, 230),
+        (x + 3, y + 72), (x + 3, y + 79), 2
+    )
+    pygame.draw.line(
+        screen, (230, 230, 230),
+        (x + 47, y + 72), (x + 47, y + 79), 2
+    )
+
+    # Nose highlight
+    pygame.draw.line(
+        screen, (255, 255, 255),
+        (x + 25, y + 7), (x + 25, y + 24), 2
     )
 
 
